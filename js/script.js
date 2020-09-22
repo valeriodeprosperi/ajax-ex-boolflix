@@ -30,5 +30,31 @@ $(document).ready(function(){
 });
 
 function renderMovie(movies){
-  console.log(movies);
+  // console.log(movies);
+  var source = $("#movie-template").html();
+var template = Handlebars.compile(source);
+
+// stampare film chiamata api
+for (var i = 0; i < movies.length; i++) {
+console.log(movie[i]);
+
+var title = movies[i].title;
+var originalTitle = movies[i].original_title;
+var lang = movies[i].original_language;
+var vote = movies[i].vote_average;
+
+// prepariamo context
+var context = {
+  "title": title,
+  "original_title": originalTitle,
+  "lang":lang,
+  "vote": vote
+};
+// prepariamo html
+var html = template(context);
+
+// inseriamo html nel tag ul
+$("#list-movies").append(html);
+}
+
 }
