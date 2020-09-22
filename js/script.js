@@ -36,7 +36,7 @@ var template = Handlebars.compile(source);
 
 // stampare film chiamata api
 for (var i = 0; i < movies.length; i++) {
-console.log(movie[i]);
+console.log(movies[i]);
 
 var title = movies[i].title;
 var originalTitle = movies[i].original_title;
