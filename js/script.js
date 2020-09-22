@@ -1,3 +1,11 @@
+$(document).ready(function() {
+  $(".btn").click(function(){
+    
+  }
+
+
+
+
 $(document).ready(function(){
 
   var searchMovie = "Il Padrino";
