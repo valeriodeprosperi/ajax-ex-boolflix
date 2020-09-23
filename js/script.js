@@ -1,12 +1,25 @@
 
-
-
-
-
-function callAjax(value) {
 $(document).ready(function(){
+  // valore input search
+    $("#search-button").click(function() {
+      var searchMovie = $("#search-bar").val();
+      resetSearch();
+      getMovies(searchMovie);
+    });
 
-  var searchMovie = "Il Padrino";
+  // valore input invio
+ $("#search-bar").keyup(
+     function(event) {
+       if (event.which == 13) {
+         var searchMovie = $("#search-bar").val();
+         resetSearch();
+         getMovies(searchMovie);
+       }
+     }
+   );
+
+   function getMovies(searchString) {
+
 
   $.ajax(
     {
@@ -14,7 +27,7 @@ $(document).ready(function(){
       "url": "https://api.themoviedb.org/3/search/movie",
       "data": {
         "api_key":"998db081c3b816179a3b215856e82b99",
-        "query": searchMovie,
+        "query": searchString,
         "language": "it-IT"
       },
       "method": "GET",
@@ -29,27 +42,12 @@ $(document).ready(function(){
 
   )
 
-});
- }
-
- // valore input search
-   $("#search-button").click(function() {
-     var value = $("#search-bar").val();
-     $("#search-bar").val(""); //svuoto la search bar dopo ogni invio
-     callAjax(value);
-   });
+};
 
 
-   // valore input invio
-  $("#search-bar").keyup(
-      function(event) {
-        if (event.which == 13) {
-          var value = $("#search-bar").val();
-          $("#search-bar").val(""); //svuoto la search bar dopo ogni invio
-          callAjax(value);
-        }
-      }
-    );
+
+
+
 
 
 
@@ -90,8 +88,8 @@ $("#list-movies").append(html);
 }
 
 // funzione che svuota campo input per ricerca e mia lista
-function resetSearch(){
-
-  $("#list-movies").html("");
-  $("#search-bar").val("");
-}
+// function resetSearch(){
+//
+//   $("#list-movies").html("");
+//   $("#search-bar").val("");
+// };
