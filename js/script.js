@@ -1,11 +1,9 @@
-$(document).ready(function() {
-  $(".btn").click(function(){
-    
-  }
 
 
 
 
+
+function callAjax(value) {
 $(document).ready(function(){
 
   var searchMovie = "Il Padrino";
@@ -31,11 +29,35 @@ $(document).ready(function(){
 
   )
 
+});
+ }
+
+ // valore input search
+   $("#search-button").click(function() {
+     var value = $("#search-bar").val();
+     $("#search-bar").val(""); //svuoto la search bar dopo ogni invio
+     callAjax(value);
+   });
 
 
-
+   // valore input invio
+  $("#search-bar").keyup(
+      function(event) {
+        if (event.which == 13) {
+          var value = $("#search-bar").val();
+          $("#search-bar").val(""); //svuoto la search bar dopo ogni invio
+          callAjax(value);
+        }
+      }
+    );
 
 });
+
+
+
+
+
+
 
 function renderMovie(movies){
   // console.log(movies);
