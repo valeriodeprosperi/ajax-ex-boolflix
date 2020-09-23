@@ -83,13 +83,6 @@ var html = template(context);
 
 // inseriamo html nel tag ul
 $("#list-movies").append(html);
-}
+};
 
-}
-
-// funzione che svuota campo input per ricerca e mia lista
-// function resetSearch(){
-//
-//   $("#list-movies").html("");
-//   $("#search-bar").val("");
-// };
+};
