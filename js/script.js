@@ -51,7 +51,7 @@ $(document).ready(function(){
       }
     );
 
-});
+
 
 
 
@@ -87,4 +87,11 @@ var html = template(context);
 $("#list-movies").append(html);
 }
 
+}
+
+// funzione che svuota campo input per ricerca e mia lista
+function resetSearch(){
+
+  $("#list-movies").html("");
+  $("#search-bar").val("");
 }
