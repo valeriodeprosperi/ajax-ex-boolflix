@@ -63,7 +63,9 @@ function renderMovie(movies){
 var template = Handlebars.compile(source);
 
 // stampare film chiamata api
-for (var i = 0; i < movies.length; i++) {
+for (var i = 0; i < movies.length; i++)
+{
+
 console.log(movies[i]);
 
 var title = movies[i].title;
@@ -113,9 +115,9 @@ var flags =[
 ];
 if (flag == "it") {
     var flag = '<img class="flag" src="img/it.svg" alt="it">';
-  } else  (flag == "en") {
+  } else  (flag == "en")
     flag = '<img class="flag" src="img/gb.svg" alt="it">';
-}
+
 
 
 }
