@@ -67,9 +67,9 @@ for (var i = 0; i < movies.length; i++) {
 console.log(movies[i]);
 
 var title = movies[i].title;
-var originalTitle = movies[i].original_title,
-var lang = printFlags(movies[i].original_language),
-var vote = printStars(movies[i].vote_average)
+var originalTitle = movies[i].original_title;
+var lang = printFlags(movies[i].original_language);
+var vote = printStars(movies[i].vote_average);
 
 // prepariamo context
 var context = {
