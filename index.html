@@ -11,26 +11,28 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header>
+      <input type="text" id="search">
+      <button id="send-search">Search</button>
+    </header>
+    <h2>Film</h2>
+    <ul id="list-movies">
 
-  <div class="input">
-    <input id="search-bar" type="text" name="movie-name"  placeholder="Movie title" value="">
-    <button id="search-button" type="button" name="button">Search</button>
-  </div>
+    </ul>
+    <h2>Series</h2>
+    <ul id="list-series">
 
-<ul id="list-movies">
-  <script id="movie-template" type="text/x-handlebars-template">
-
-  <li>
-    <h3>{{title}}</h3>
-    <h4>{{original_title}}</h4>
-    <p>{{lang}}</p>
-    <p>Media voto<strong>{{vote}}</strong></p>
-
-  </li>
-
-  </script>
-</ul>
-
-  <script src="js/script.js" charset="utf-8"></script>
-</body>
+    </ul>
+    <script id="movie-template" type="text/x-handlebars-template">
+      <li>
+        <div><img src="{{poster}}" alt="{{title}}"></div>
+        <h3>{{title}}</h3>
+        <p>{{type}}</p>
+        <h4>Titlo Originale: {{title_orginal}}</h4>
+        <p>Lingua Originale: {{{lang}}}</p>
+        <p>Media voto: {{{vote}}}</p>
+      </li>
+    </script>
+    <script src="js/script.js" charset="utf-8"></script>
+  </body>
 </html>

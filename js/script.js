@@ -1,123 +1,131 @@
 
-$(document).ready(function(){
-  // valore input search
-    $("#search-button").click(function() {
-      var searchMovie = $("#search-bar").val();
-      resetSearch();
-      getMovies(searchMovie);
-    });
+$(document).ready(function() {
 
-  // valore input invio
- $("#search-bar").keyup(
-     function(event) {
-       if (event.which == 13) {
-         var searchMovie = $("#search-bar").val();
-         resetSearch();
-         getMovies(searchMovie);
-       }
-     }
-   );
+  // click sul bottone di ricerca
+  $("#send-search").click(function(){
+    search();
+  });
 
-   function getMovies(searchString) {
+  // avvio la ricerca tramite il tasto invio
+  $("#search").keyup(function(event) {
+    if(event.which == 13) {
+      search();
+    }
+  });
 
+});
 
+// funzione di rcerca generica
+function search() {
+  // prendere il valore della input
+  var searchMovie = $("#search").val();
+  resetSearch();
+  // recupero i film
+  getData("movie", searchMovie);
+  // recupero le serie tv
+  getData("tv", searchMovie);
+}
+
+// funzione generica getData
+function getData(type, searchString) {
+  // eseguire una chiamata al server per recuperare le serie tv
   $.ajax(
     {
-
-      "url": "https://api.themoviedb.org/3/search/movie",
+      "url": "https://api.themoviedb.org/3/search/"+type,
       "data": {
-        "api_key":"998db081c3b816179a3b215856e82b99",
+        "api_key": "51a580ca8c75a33ea40810a340044302",
         "query": searchString,
         "language": "it-IT"
       },
       "method": "GET",
-      "success": function(data){
-        renderMovie(data.results);
+      "success": function(data) {
+        renderResults(type,data.results);
       },
-      "error": function(err){
+      "error": function(err) {
         alert("Errore!");
       }
     }
+  );
+}
 
+// funzione che stampa il risultato
+function renderResults(type, results) {
 
-  )
-
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function renderMovie(movies){
-  // console.log(movies);
   var source = $("#movie-template").html();
-var template = Handlebars.compile(source);
+  var template = Handlebars.compile(source);
+  // stampare ogni film ricevuto dalla chiamata api
+  for (var i = 0; i < results.length; i++) {
 
-// stampare film chiamata api
-for (var i = 0; i < movies.length; i++)
-{
+    var title, original_title, container;
 
-console.log(movies[i]);
+    if(type == "movie") {
+      title = results[i].title;
+      original_title = results[i].original_title;
+      container = $("#list-movies");
+    } else if(type == "tv") {
+      title = results[i].name;
+      original_title = results[i].original_name;
+      container = $("#list-series");
+    }
 
-var title = movies[i].title;
-var originalTitle = movies[i].original_title;
-var lang = printFlags(movies[i].original_language);
-var vote = printStars(movies[i].vote_average);
+    if(results[i].poster_path == null) {
+      var poster = "img/no_poster.png";
+    } else {
+      var poster = "https://image.tmdb.org/t/p/w342"+results[i].poster_path;
+    }
 
-// prepariamo context
-var context = {
-  "title": title,
-  "original_title": originalTitle,
-  "lang":lang,
-  "vote": vote
-};
-// prepariamo html
-var html = template(context);
+    // prepariamo il nostro context
+    var context = {
+      "poster": poster,
+      "title": title,
+      "title_orginal": original_title,
+      "lang": printFlags(results[i].original_language),
+      "vote": printStars(results[i].vote_average),
+      "type": type
+    };
 
-// inseriamo html nel tag ul
-$("#list-movies").append(html);
-};
+    // prepariamo il nostro html
+    var html = template(context);
+    // iniettiamo il nostro html nel tag ul
+    container.append(html);
+  }
 
-};
-};
+}
 
+// funzione che svuota il campo input per la ricerca e la nostra lista
+function resetSearch() {
+  $("#list-series").html("");
+  $("#list-movies").html("");
+  $("#search").val("");
+}
 
-function printStars(num){
-  // trasformo numero in numero intero
-  var num = Math.ceil( num / 2);
+// funzione che trasforma il numero in un numero intero fra 1 e 5 e restituisce le stelle
+function printStars(num) {
+  // trasformiamo il numero in un numero intero fra 1 e 5
+  var num = Math.ceil(num / 2);
   var string = "";
 
-  for (var i = 1; i <= 5; i++){
-    if(i <= num){
-      string += "<i class= 'fas fa-star'></i>";
+  for (var i = 1; i <= 5; i++) {
+    if(i <= num) {
+      string += "<i class='fas fa-star'></i>";
     } else {
-      string += "<i class= 'fas fa-star'></i>";
+      string += "<i class='far fa-star'></i>";
     }
   }
-    return string;
+
+  return string;
+}
+
+// funzione che restituisce la bandiera della lingua
+function printFlags(lang) {
+  var flags = [
+    "it",
+    "en"
+  ];
+
+  if(flags.includes(lang)) {
+    return "<img class='flag' src='img/"+lang+".svg'>";
   }
 
-
-
-function printFlags(lang){
-var flags =[
-  "it",
-  "en"
-];
-if (flag == "it") {
-    var flag = '<img class="flag" src="img/it.svg" alt="it">';
-  } else  (flag == "en")
-    flag = '<img class="flag" src="img/gb.svg" alt="it">';
-
-
-
+  return lang;
 }
